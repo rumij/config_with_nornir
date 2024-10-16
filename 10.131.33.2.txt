@@ -1,0 +1,425 @@
+2024-10-16 17:15:03.660 
+!Software Version V600R007C20SPC600
+#
+sysname USG6300E
+#
+ l2tp domain suffix-separator @
+#
+vlan batch 10
+#
+authentication-profile name portal_authen_default
+#
+ undo factory-configuration prohibit
+#
+undo telnet server enable
+undo telnet ipv6 server enable
+#
+clock timezone UTC add 00:00:00
+#
+ firewall packet-filter basic-protocol enable
+#
+ update schedule location-sdb weekly Sun 01:35
+#
+ firewall defend action discard
+#
+ undo log type traffic enable
+ log type syslog enable
+ log type policy enable
+#
+ undo dataflow enable
+#
+ undo sa force-detection enable
+#
+ lldp enable
+#
+ banner enable
+#
+ user-manage web-authentication security port 8887
+ undo privacy-statement english
+ undo privacy-statement chinese
+page-setting
+ user-manage security version tlsv1.2
+password-policy
+ level high
+#
+ firewall ipv6 statistics system enable
+#
+ firewall ids authentication type aes256
+#
+ icmp echo-reply fast enable
+#
+ web-manager security version tlsv1.2
+ web-manager enable
+ web-manager security enable
+ undo web-manager config-guide enable
+#
+firewall dataplane to manageplane application-apperceive default-action drop
+#
+dns server unnumbered interface WAN0/0/0 
+#
+update schedule ips-sdb daily 02:04
+update schedule av-sdb daily 02:04
+update schedule sa-sdb daily 02:04
+update schedule ip-reputation daily 02:04
+update schedule cnc daily 02:04
+update schedule file-reputation daily 02:04
+update schedule ext-url-sdb daily 02:04
+#
+ disk-usage alarm threshold 95 
+#
+ip vpn-instance default
+ ipv4-family
+#
+ip address-set 123.249.38.32 type object
+ address 0 123.249.38.32 mask 32
+#
+ip address-set 47.95.210.185 type object
+ address 0 47.95.210.185 mask 32
+#
+ip address-set 139.196.178.224 type object
+ address 0 139.196.178.224 mask 32
+#
+ time-range worktime
+  period-range 08:00:00 to 18:00:00 working-day   
+#
+ike proposal default
+ encryption-algorithm aes-256 aes-192 aes-128 
+ dh group14 
+ authentication-algorithm sha2-512 sha2-384 sha2-256 
+ authentication-method pre-share
+ integrity-algorithm hmac-sha2-256 
+ prf hmac-sha2-256 
+#
+web-auth-server default
+ port 50100
+#
+portal-access-profile name default
+#
+aaa
+ authentication-scheme admin_ad
+ authentication-scheme admin_ad_local
+ authentication-scheme admin_hwtacacs
+ authentication-scheme admin_hwtacacs_local
+ authentication-scheme admin_ldap
+ authentication-scheme admin_ldap_local
+ authentication-scheme admin_local
+ authentication-scheme admin_radius
+ authentication-scheme admin_radius_local
+ authentication-scheme default
+ authorization-scheme default
+ accounting-scheme default
+ domain default
+  service-type internetaccess ssl-vpn l2tp ike dot1x
+  internet-access mode password
+  reference user current-domain
+ manager-user admin 
+  password cipher $1a$bA&GA.)!1>$#[Qo~!)xc>#@}C;S]c#PHO~c2WDtXEJPL$>dXZ;O$
+  service-type web ssh 
+  level 15 
+  authentication-scheme admin_local 
+
+ role system-admin
+ role device-admin
+ role device-admin(monitor)
+ role audit-admin
+#
+interface Vlanif10
+ ip address 10.131.33.46 255.255.255.240
+ alias 10
+ service-manage ping permit
+#
+interface MEth0/0/0
+ undo shutdown
+ ip binding vpn-instance default
+ ip address 192.168.0.1 255.255.255.0
+ service-manage http permit
+ service-manage https permit
+ service-manage ping permit
+#
+interface Eth-Trunk1
+ ip address 123.114.37.140 255.255.255.240
+ mode lacp-static
+ alias Eth-Trunk1
+ gateway 123.114.37.129 route disable
+ service-manage ping permit
+#
+interface Eth-Trunk2
+ ip address 10.131.33.2 255.255.255.252
+ mode lacp-static
+ alias Eth-Trunk2
+ service-manage https permit
+ service-manage ping permit
+ service-manage ssh permit
+ service-manage snmp permit
+#
+l2tp-group default-lns
+#
+interface GigabitEthernet0/0/0
+ portswitch
+ undo shutdown
+ port link-type access
+ port default vlan 10
+#
+interface GigabitEthernet0/0/1
+ portswitch
+ undo shutdown
+ port link-type access
+ port default vlan 10
+#
+interface GigabitEthernet0/0/2
+ undo shutdown
+#
+interface GigabitEthernet0/0/3
+ undo shutdown
+#
+interface GigabitEthernet0/0/4
+ portswitch
+ undo shutdown
+ port link-type access
+#
+interface GigabitEthernet0/0/5
+ portswitch
+ undo shutdown
+ port link-type access
+#
+interface GigabitEthernet0/0/6
+ undo shutdown
+ combo enable fiber
+#
+interface GigabitEthernet0/0/7
+ portswitch
+ undo shutdown
+ port link-type access
+ combo enable fiber
+#
+interface WAN0/0/0
+ undo shutdown
+ eth-trunk 1
+#
+interface WAN0/0/1
+ undo shutdown
+ eth-trunk 1
+#
+interface XGigabitEthernet0/0/0
+ undo shutdown
+ eth-trunk 2
+#
+interface XGigabitEthernet0/0/1
+ undo shutdown
+ eth-trunk 2
+#
+interface Virtual-if0
+#
+interface NULL0
+#
+firewall zone local
+ set priority 100
+#
+firewall zone trust
+ set priority 85
+ add interface Eth-Trunk2
+ add interface MEth0/0/0
+#
+firewall zone untrust
+ set priority 5
+ add interface Eth-Trunk1
+#
+firewall zone dmz
+ set priority 50
+#
+firewall zone name manage id 4
+ add interface GigabitEthernet0/0/0
+ add interface GigabitEthernet0/0/1
+ add interface Vlanif10
+#
+firewall zone name mirror id 5
+ add interface GigabitEthernet0/0/4
+#
+api
+ security version tlsv1.2
+#
+undo icmp name timestamp-request receive
+undo icmp name timestamp-reply receive
+undo icmp type 17 code 0 receive
+undo icmp type 18 code 0 receive
+#
+ip route-static 0.0.0.0 0.0.0.0 Eth-Trunk1 123.114.37.129
+ip route-static 10.128.0.0 255.255.255.0 10.131.33.1
+ip route-static 10.128.16.0 255.255.240.0 10.131.33.1
+ip route-static 10.129.5.0 255.255.255.0 10.131.33.1
+ip route-static 10.131.32.0 255.255.255.0 10.131.33.1
+ip route-static 10.131.33.4 255.255.255.252 10.131.33.1
+ip route-static 10.131.33.8 255.255.255.252 10.131.33.1
+ip route-static 10.131.33.12 255.255.255.252 10.131.33.1
+ip route-static 10.131.33.16 255.255.255.252 10.131.33.1
+#
+snmp-agent
+snmp-agent local-engineid 800007DB032868D2003F9F
+snmp-agent community read cipher %^%#eiZlE.cG_4Pd%`Jyl60D=<>BY2++4@>zEhS:%Q+Z~)4b@e|SZE7UV}N.(YwPe@L/5H7KA4M}E~+@dMtN%^%#
+snmp-agent sys-info version v2c v3
+snmp-agent target-host trap address udp-domain 10.129.5.50 params securityname cipher %^%#:{4~Q[L_~##E1vVr=S=(]HyrRvi/#Ng@NiNPN>(&%^%# v2c
+snmp-agent trap source Eth-Trunk2
+snmp-agent trap enable
+#
+undo ssh server compatible-ssh1x enable
+stelnet server enable
+ssh authentication-type default password
+ssh user admin
+ssh user admin authentication-type password
+ssh user admin service-type all
+ssh user admin sftp-directory hda1:
+ssh server cipher aes256_ctr aes128_ctr
+ssh server hmac sha2_256
+ssh server key-exchange dh_group16_sha512 dh_group15_sha512 dh_group14_sha256 dh_group_exchange_sha256
+ssh client cipher aes256_ctr aes128_ctr
+ssh client hmac sha2_256
+ssh client key-exchange dh_group16_sha512 dh_group15_sha512 dh_group14_sha256 dh_group_exchange_sha256
+ssh server dh-exchange min-len 3072
+ssh server publickey ecc
+#
+firewall detect ftp
+#
+ observing-port GigabitEthernet0/0/4
+#
+ port-mirroring WAN0/0/0 both GigabitEthernet0/0/4
+ port-mirroring WAN0/0/1 both GigabitEthernet0/0/4
+#
+ v-gateway ssl-renegotiation-attack defend enable
+ v-gateway ssl weak-encryption enable
+#
+user-interface con 0
+ authentication-mode password
+ set authentication password cipher $1c$MXfc2Lvp!~$fT{x-ax(EZ|#D"3A:OZS}9y'3"foq9VAifM=<qtM$
+user-interface vty 0 4
+ authentication-mode aaa
+ user privilege level 15
+ protocol inbound ssh
+user-interface vty 16 20
+#
+pki realm default
+#
+sa
+#
+location
+#
+multi-interface
+ mode proportion-of-weight
+#
+right-manager server-group
+#
+IoT
+#
+network-scan
+ network-scan timeout per-asset 300
+ network-scan timeout entire-scan 23
+ conflict-resolve override
+#
+ztna
+#
+device-classification
+ device-group pc
+ device-group mobile-terminal
+ device-group undefined-group
+#
+user-manage single-sign-on ad
+user-manage single-sign-on tsm
+user-manage single-sign-on radius
+user-manage auto-sync online-user
+user-manage server-sync tsm
+#
+security-policy
+ rule name Trust-To-Untrust
+  policy logging
+  session logging
+  traffic logging enable
+  source-zone trust
+  destination-zone untrust
+  action permit
+ rule name 
+  policy logging
+  session logging
+  traffic logging enable
+  source-zone untrust
+  source-address address-set 123.249.38.32
+  source-address address-set 139.196.178.224
+  source-address address-set 47.95.210.185
+  action permit
+ rule name Local-To-any
+  policy logging
+  session logging
+  traffic logging enable
+  source-zone local
+  action permit
+ rule name Trust-To-Local
+  policy logging
+  session logging
+  traffic logging enable
+  source-zone trust
+  destination-zone local
+  action permit
+ rule name any
+  policy logging
+  session logging
+  traffic logging enable
+  service icmp
+  action permit
+ rule name manage
+  policy logging
+  session logging
+  traffic logging enable
+  source-zone trust
+  destination-zone manage
+  action permit
+ rule name mirror
+  policy logging
+  session logging
+  traffic logging enable
+  source-zone mirror
+  action permit
+ rule name wan_mirrot
+  policy logging
+  session logging
+  traffic logging enable
+  destination-zone mirror
+  action permit
+#
+auth-policy
+#
+traffic-policy
+ profile xiansu
+  bandwidth maximum-bandwidth whole upstream 400000
+  bandwidth maximum-bandwidth whole downstream 160000
+  bandwidth maximum-bandwidth per-ip upstream 90000
+  bandwidth maximum-bandwidth per-ip downstream 40000
+ rule name xiansu
+  source-zone trust
+  destination-zone untrust
+  action qos profile xiansu
+#
+policy-based-route
+#
+nat-policy
+ rule name internet
+  source-zone local
+  source-zone trust
+  destination-zone untrust
+  action source-nat easy-ip
+#
+proxy-policy
+#
+quota-policy
+#
+pcp-policy
+#
+dns-transparent-policy
+ mode based-on-multi-interface
+#
+rightm-policy
+#
+decryption-policy
+#
+flow-probe-policy
+#
+mac-access-profile name mac_access_profile
+#
+return

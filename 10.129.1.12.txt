@@ -1,0 +1,1176 @@
+
+Building configuration...
+Current configuration: 29282 bytes
+
+version S5760X_RGOS 12.6(2)B1304, Release(10202904)
+hostname ASW-B-7.WUHAN.Ubras
+privilege exec level 2 reload
+privilege exec level 2 show
+!
+spanning-tree mst 0 priority 0
+spanning-tree
+!
+global access-group disable
+ip dhcp snooping
+!
+username hanchuanfengshu privilege 2 secret 8 $1c$yy23uMQkhi$*!f!n>!6z(`pjd&d|`j,!,#nb((,~~.4`f~bzj|v$
+username liangb privilege 15 secret 8 $1c$7eyy23uMQk$jfh4!`~6,f2`f6:(.:(|((.&(lftr(|8(4rbh(0($
+username ubras privilege 15 secret 8 $1c$2MjWkWWQEE$&,f*j48#,<.db<pz2t4~#tz8`$fb:!>(x`x:&*h0$
+!
+poe mode auto
+poe-track auto-recover-downstream
+cpu-protect type lldp bandwidth 500
+!
+no cwmp
+!
+service dhcp
+!
+install switch 1 S5760C-48GT4XS-HP-X
+install switch 2 S5760C-48GT4XS-HP-X
+install 1/0 S5760C-48GT4XS-HP-X
+install 2/0 S5760C-48GT4XS-HP-X
+!
+sysmac 7042.d3a3.a7ea
+!
+webmaster level 0 username admin password 7 $10$347$JOydfaLYt5ab$
+enable service web-server http
+enable service web-server https
+!
+nfpp
+ arp-guard rate-limit per-src-ip 18
+ arp-guard rate-limit per-src-mac 18
+ arp-guard rate-limit per-port 300
+ arp-guard attack-threshold per-src-ip 30
+ arp-guard attack-threshold per-src-mac 30
+ arp-guard attack-threshold per-port 500
+ no dhcp-guard enable
+ dhcp-guard rate-limit per-port 200
+ dhcp-guard attack-threshold per-port 350
+!
+password policy printable-character-check
+no password policy min-size
+no password policy strong
+service password-encryption
+!
+redundancy
+!
+enable service snmp-agent
+ip ssh key-exchange dh_group_exchange_sha1 dh_group14_sha1 ecdh_sha2_nistp256 ecdh_sha2_nistp384 ecdh_sha2_nistp521
+ip ssh cipher-mode ctr gcm
+ip ssh hmac-algorithm sha2-256 sha2-512
+ip ssh version 2
+service sysname
+service sequence-numbers
+logging userinfo command-log
+logging file flash:syslog debugging
+no logging console
+logging source interface VLAN 99
+clock timezone beijing +8 0
+!
+login privilege log
+enable secret 8 $1c$yy23uMQkhi$vjlhl:!&t0l68|>0h(vxp!xhfx~.x8$rrfj0v4x#$ 
+enable service ssh-server
+enable service telnet-server
+!
+vlan 99
+ name MGT
+!
+vlan 100
+ name Offic_user
+!
+vlan 300
+ name Server
+!
+vlan 400
+ name WIFI-alibaba-inc1
+!
+vlan 401
+ name WIFI-alibaba-guest
+!
+vlan 500
+ name WIFI-alibaba-inc2
+!
+vlan 600
+ name Security
+!
+vlan 800
+ name AP_MGT
+!
+vlan 900
+ name HuLian
+!
+vlan 1
+!
+interface GigabitEthernet 1/0/1
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/2
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/3
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/4
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/5
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/6
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/7
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/8
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/9
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/10
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/11
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/12
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/13
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/14
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/15
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/16
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/17
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/18
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/19
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/20
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/21
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/22
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/23
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/24
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 1/0/25
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/26
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/27
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/28
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/29
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/30
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/31
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/32
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/33
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/34
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/35
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/36
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 1/0/37
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/38
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/39
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/40
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/41
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/42
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/43
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/44
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/45
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/46
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/47
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 1/0/48
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/1
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/2
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/3
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/4
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/5
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/6
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/7
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/8
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/9
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/10
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/11
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/12
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/13
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/14
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/15
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/16
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/17
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/18
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/19
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/20
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/21
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/22
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/23
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/24
+ switchport protected
+ switchport mode trunk
+ switchport trunk native vlan 800
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ rldp port loop-detect shutdown-port
+ poe enable
+ poe legacy
+!
+interface GigabitEthernet 2/0/25
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/26
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/27
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/28
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/29
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/30
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/31
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/32
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/33
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/34
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/35
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/36
+ storm-control broadcast pps 500
+ storm-control multicast pps 500
+ storm-control unicast pps 1000
+ switchport protected
+ load-interval 30
+ switchport access vlan 600
+ mls qos trust dscp
+ rldp port loop-detect shutdown-port
+ no poe enable
+!
+interface GigabitEthernet 2/0/37
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/38
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/39
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/40
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/41
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/42
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/43
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/44
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/45
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/46
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/47
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface GigabitEthernet 2/0/48
+ switchport protected
+ switchport access vlan 100
+ spanning-tree bpduguard enable
+ spanning-tree portfast
+ mls qos trust dscp
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ no poe enable
+!
+interface TenGigabitEthernet 1/0/49
+!
+interface TenGigabitEthernet 1/0/50
+!
+interface TenGigabitEthernet 1/0/51
+ description To_DSW-1A.WUHAN.Ubras:TF1/0/1
+ port-group 1
+!
+interface TenGigabitEthernet 1/0/52
+ no switchport
+ no lldp enable
+!
+interface TenGigabitEthernet 2/0/49
+!
+interface TenGigabitEthernet 2/0/50
+!
+interface TenGigabitEthernet 2/0/51
+ description To_DSW-1B.WUHAN.Ubras:TF1/0/1
+ port-group 1
+!
+interface TenGigabitEthernet 2/0/52
+ no switchport
+ no lldp enable
+!
+interface AggregatePort 1
+ switchport mode trunk
+ ip dhcp snooping trust
+!
+interface VLAN 99
+ description SW-MGT
+ ip address 10.129.1.12 255.255.255.0
+!
+interface Mgmt 1/0
+ ip address mix dhcp
+ ip address mix 192.168.1.200 255.255.255.0
+!
+interface Mgmt 2/0
+!
+ntp update-calendar
+ntp server 203.107.6.88 prefer
+ntp server 114.118.7.163
+!
+switch virtual domain 1
+ dual-active bfd interface TenGigabitEthernet 1/0/52
+ dual-active bfd interface TenGigabitEthernet 2/0/52
+!
+ip route 0.0.0.0 0.0.0.0 10.129.1.254
+!
+snmp-server view view1 1.3.6.1.2.1.1 include
+snmp-server view view2 1.3.6.1.2.1.1.4.0 include
+no snmp-server logging set-operation
+snmp-server trap-source VLAN 99
+snmp-server enable traps
+no snmp-server enable version v1
+snmp-server enable version v2c
+no snmp-server enable version v3
+no snmp-server enable secret-dictionary-check
+snmp-server community 7 $10$355$t3e2tJY=$ ro 
+no snmp-server authentication attempt
+!
+line console 0
+line vty 0 15
+ login local
+!
+end
